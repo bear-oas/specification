@@ -1,0 +1,258 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Third Backend API",
+    "description": "Spring Boot 기반 샘플 REST API 문서입니다.",
+    "contact": {
+      "name": "API Support",
+      "email": "support@example.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User",
+      "description": "사용자 관리 API"
+    },
+    {
+      "name": "Hello",
+      "description": "간단한 인사 API"
+    }
+  ],
+  "paths": {
+    "/api/users/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "사용자 ID로 조회",
+        "description": "특정 ID를 가진 사용자 정보를 반환합니다.",
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "사용자 ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "사용자를 찾음",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "사용자를 찾을 수 없음"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "사용자 정보 수정",
+        "description": "기존 사용자의 정보를 업데이트합니다.",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "사용자 ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "description": "수정할 사용자 정보",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "사용자 정보가 성공적으로 수정됨",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "사용자를 찾을 수 없음"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "사용자 삭제",
+        "description": "특정 ID를 가진 사용자를 시스템에서 삭제합니다.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "사용자 ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "사용자가 성공적으로 삭제됨"
+          },
+          "404": {
+            "description": "사용자를 찾을 수 없음"
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "모든 사용자 조회",
+        "description": "시스템에 등록된 모든 사용자 목록을 반환합니다.",
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "성공적으로 조회됨",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "새 사용자 생성",
+        "description": "새로운 사용자를 시스템에 등록합니다.",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "생성할 사용자 정보",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "사용자가 성공적으로 생성됨",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "잘못된 요청"
+          }
+        }
+      }
+    },
+    "/hello": {
+      "get": {
+        "tags": [
+          "Hello"
+        ],
+        "summary": "인사 메시지 반환",
+        "description": "Hello Spring Boot! 메시지를 반환합니다.",
+        "operationId": "hello",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "description": "사용자 정보",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "사용자 ID",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "사용자 이름",
+            "example": "홍길동"
+          },
+          "email": {
+            "type": "string",
+            "description": "이메일 주소",
+            "example": "hong@example.com"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32",
+            "description": "나이",
+            "example": 25
+          }
+        }
+      }
+    }
+  }
+}
